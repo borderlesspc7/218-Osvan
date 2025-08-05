@@ -1,9 +1,12 @@
-import "./index.css";
+import React from "react";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
+import AppRoutes from "./routes/AppRoutes";
+
 function App() {
   return (
-    <div className="App">
-      <h1>App</h1>
-    </div>
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
   );
 }
 

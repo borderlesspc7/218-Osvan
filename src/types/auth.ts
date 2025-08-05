@@ -7,7 +7,7 @@ export interface RegisterData {
   name: string;
   email: string;
   password: string;
-  role: "user" | "client" | "admin";
+  role?: "user" | "client" | "admin";
 }
 
 export interface UserData {

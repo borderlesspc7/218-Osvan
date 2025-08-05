@@ -1,0 +1,32 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-button {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.forgot-password {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+}
+
+.forgot-password:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.forgot-password:focus {
+  outline: none;
+}

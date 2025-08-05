@@ -34,8 +34,16 @@ export const authService = {
         user: userData,
         token: await userCredential.user.getIdToken(),
       };
-    } catch {
-      throw new Error("Erro ao fazer login");
+    } catch (error: any) {
+      if (error.code === "auth/user-not-found") {
+        throw new Error("Usuário não encontrado");
+      } else if (error.code === "auth/wrong-password") {
+        throw new Error("Senha incorreta");
+      } else if (error.code === "auth/invalid-email") {
+        throw new Error("E-mail inválido");
+      } else {
+        throw new Error("Erro ao fazer login");
+      }
     }
   },
 
@@ -51,7 +59,7 @@ export const authService = {
         uid: userCredential.user.uid,
         name: data.name,
         email: data.email,
-        role: data.role,
+        role: data.role || "client",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
@@ -62,8 +70,16 @@ export const authService = {
         user: userData,
         token: await userCredential.user.getIdToken(),
       };
-    } catch {
-      throw new Error("Erro ao registrar usuário");
+    } catch (error: any) {
+      if (error.code === "auth/email-already-in-use") {
+        throw new Error("E-mail já está em uso");
+      } else if (error.code === "auth/weak-password") {
+        throw new Error("Senha muito fraca");
+      } else if (error.code === "auth/invalid-email") {
+        throw new Error("E-mail inválido");
+      } else {
+        throw new Error("Erro ao registrar usuário");
+      }
     }
   },
 

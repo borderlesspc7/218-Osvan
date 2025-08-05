@@ -1,0 +1,42 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-button {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.register-footer {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.terms-text {
+  color: #6b7280;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.terms-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.terms-link:hover {
+  text-decoration: underline;
+}
+
+.terms-link:focus {
+  outline: none;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .terms-text {
+    font-size: 0.7rem;
+  }
+}
