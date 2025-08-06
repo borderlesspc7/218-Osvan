@@ -2,11 +2,11 @@
 
 import type React from "react";
 import { useState } from "react";
-import { Mail } from "lucide-react";
-import Input from "../Input/Input";
-import PasswordInput from "../PassowordInput/PassowordInput";
-import Button from "../Button/Button";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import { Loader2, Mail } from "lucide-react";
+import Input from "../ui/Input/Input";
+import PasswordInput from "../auth/PassowordInput/PassowordInput";
+import Button from "../ui/Button/Button";
+import ErrorMessage from "../ui/ErrorMessage/ErrorMessage";
 import "./LoginForm.css";
 
 interface LoginFormProps {
@@ -98,6 +98,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         className="login-button"
       >
         {isLoading ? "Entrando..." : "Entrar"}
+        {isLoading && <Loader2 className="animate-spin" />}
       </Button>
 
       <a

@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { useAuthContext } from "../../contexts/useAuthContext";
 import { useNavigation } from "../../hooks/useNavigation";
-import AuthLayout from "../../components/AuthLayout/AuthLayout";
-import AuthIllustration from "../../components/AuthIllustration/AuthIllustration";
-import AuthCard from "../../components/AuthCard/AuthCard";
+import AuthLayout from "../../components/auth/AuthLayout/AuthLayout";
+import AuthIllustration from "../../components/auth/AuthIllustration/AuthIllustration";
+import AuthCard from "../../components/auth/AuthCard/AuthCard";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import "./LoginPage.css";
 

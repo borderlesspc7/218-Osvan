@@ -4,9 +4,9 @@ import type React from "react";
 import { useState } from "react";
 import { useAuthContext } from "../../contexts/useAuthContext";
 import { useNavigation } from "../../hooks/useNavigation";
-import AuthLayout from "../../components/AuthLayout/AuthLayout";
-import AuthIllustration from "../../components/AuthIllustration/AuthIllustration";
-import AuthCard from "../../components/AuthCard/AuthCard";
+import AuthLayout from "../../components/auth/AuthLayout/AuthLayout";
+import AuthIllustration from "../../components/auth/AuthIllustration/AuthIllustration";
+import AuthCard from "../../components/auth/AuthCard/AuthCard";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 
 const RegisterPage: React.FC = () => {
@@ -27,7 +27,7 @@ const RegisterPage: React.FC = () => {
         ...data,
         role: "client", // Default role for new registrations
       });
-      navigateTo("/dashboard");
+      // A navegação será feita automaticamente pelo contexto de auth
     } catch (error) {
       console.error("Erro no cadastro:", error);
     } finally {

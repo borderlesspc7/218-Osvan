@@ -3,10 +3,10 @@
 import type React from "react";
 import { useState } from "react";
 import { Mail, User } from "lucide-react";
-import Input from "../Input/Input";
-import PasswordInput from "../PassowordInput/PassowordInput";
-import Button from "../Button/Button";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import Input from "../ui/Input/Input";
+import PasswordInput from "../auth/PassowordInput/PassowordInput";
+import Button from "../ui/Button/Button";
+import ErrorMessage from "../ui/ErrorMessage/ErrorMessage";
 import "./RegisterForm.css";
 
 interface RegisterFormData {

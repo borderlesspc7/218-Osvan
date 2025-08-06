@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import "./PassowordInput.css";
-import Input from "../Input/Input";
+import Input from "../../ui/Input/Input";
 import { Lock, Eye, EyeOff } from "lucide-react";
 
 interface PasswordInputProps {

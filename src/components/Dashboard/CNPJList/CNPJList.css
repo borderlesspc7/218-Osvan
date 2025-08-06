@@ -1,0 +1,244 @@
+.cnpj-list-container {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.cnpj-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cnpj-list-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.cnpj-count {
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #64748b;
+}
+
+.empty-state svg {
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.empty-state h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.cnpj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.cnpj-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.cnpj-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.cnpj-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.cnpj-info h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.cnpj-number {
+  font-family: "Courier New", monospace;
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.cnpj-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-button {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.edit-button:hover {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.delete-button {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.delete-button:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.cnpj-card-body {
+  margin-bottom: 1rem;
+}
+
+.status-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-label {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* Status Fiscal */
+.status-regular {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-irregular {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-suspenso {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-baixado {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+/* Situação Negociação */
+.situacao-pendente {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.situacao-andamento {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.situacao-concluida {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.situacao-cancelada {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.cnpj-card-footer {
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.update-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .cnpj-list-container {
+    padding: 1.5rem;
+  }
+
+  .cnpj-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cnpj-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .status-row {
+    gap: 0.5rem;
+  }
+
+  .status-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
