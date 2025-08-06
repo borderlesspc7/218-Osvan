@@ -27,7 +27,7 @@ const RegisterPage: React.FC = () => {
         ...data,
         role: "client", // Default role for new registrations
       });
-      // A navegação será feita automaticamente pelo contexto de auth
+      navigateTo("/dashboard");
     } catch (error) {
       console.error("Erro no cadastro:", error);
     } finally {
