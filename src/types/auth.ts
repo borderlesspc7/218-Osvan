@@ -17,6 +17,7 @@ export interface UserData {
   role: "user" | "client" | "admin";
   createdAt: string;
   updatedAt: string;
+  cnpjs: string[]; // Array com todos os CNPJs do usuário
 }
 
 export interface AuthResponse {

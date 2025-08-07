@@ -17,6 +17,7 @@ import "./DashboardPage.css";
 const DashboardPage: React.FC = () => {
   const { user } = useAuthContext();
   const [cnpjs, setCnpjs] = useState<CNPJ[]>([]);
+  const [userCnpjCount, setUserCnpjCount] = useState<number>(0);
   const [showForm, setShowForm] = useState(false);
   const [editingCNPJ, setEditingCNPJ] = useState<CNPJ | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,8 +37,9 @@ const DashboardPage: React.FC = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const userCnpjs = await cnpjService.getCNPJsByUser(user.uid);
-      setCnpjs(userCnpjs);
+      const stats = await cnpjService.getUserCnpjStats(user.uid);
+      setCnpjs(stats.userCnpjs);
+      setUserCnpjCount(stats.cnpjCount);
     } catch (err) {
       console.error("Erro ao carregar CNPJs:", err);
       setError("Erro ao carregar CNPJs. Por favor, tente novamente.");
@@ -56,11 +58,13 @@ const DashboardPage: React.FC = () => {
     try {
       const newCnpj = await cnpjService.createCNPJ(user.uid, formData);
       setCnpjs([...cnpjs, newCnpj]);
+      setUserCnpjCount((prev) => prev + 1);
       setShowForm(false);
       setEditingCNPJ(null);
     } catch (err) {
       console.error("Erro ao criar CNPJ:", err);
-      setError("Erro ao criar CNPJ. Por favor, tente novamente.");
+      // Propagar o erro para o formulário
+      throw err;
     } finally {
       setIsLoading(false);
     }
@@ -82,7 +86,8 @@ const DashboardPage: React.FC = () => {
       setEditingCNPJ(null);
     } catch (err) {
       console.error("Erro ao atualizar CNPJ:", err);
-      setError("Erro ao atualizar CNPJ. Por favor, tente novamente.");
+      // Propagar o erro para o formulário
+      throw err;
     } finally {
       setIsLoading(false);
     }
@@ -94,6 +99,7 @@ const DashboardPage: React.FC = () => {
     try {
       await cnpjService.deleteCNPJ(cnpjId);
       setCnpjs((prev) => prev.filter((cnpj) => cnpj.id !== cnpjId));
+      setUserCnpjCount((prev) => prev - 1);
     } catch (err) {
       alert("Erro ao excluir CNPJ:" + err);
       console.log(err);
@@ -108,12 +114,12 @@ const DashboardPage: React.FC = () => {
 
   const canAddMoreCNPJs = () => {
     if (userPlan.maxCNPJs === -1) return true;
-    return cnpjs.length < userPlan.maxCNPJs;
+    return userCnpjCount < userPlan.maxCNPJs;
   };
 
   const getRemainingCNPJs = () => {
     if (userPlan.maxCNPJs === -1) return "Ilimitado";
-    return userPlan.maxCNPJs - cnpjs.length;
+    return userPlan.maxCNPJs - userCnpjCount;
   };
 
   if (!user) {
@@ -135,7 +141,7 @@ const DashboardPage: React.FC = () => {
           <div className="plan-limits">
             <h4>Limite do Plano</h4>
             <div className="limit-info">
-              <span className="limit-current">{cnpjs.length}</span>
+              <span className="limit-current">{userCnpjCount}</span>
               <span className="limit-separator">/</span>
               <span className="limit-max">
                 {userPlan.maxCNPJs === -1 ? "∞" : userPlan.maxCNPJs}

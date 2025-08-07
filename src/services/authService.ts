@@ -62,6 +62,7 @@ export const authService = {
         role: data.role || "client",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        cnpjs: [],
       };
 
       await setDoc(doc(db, "users", userCredential.user.uid), userData);

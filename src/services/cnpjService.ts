@@ -8,6 +8,7 @@ import {
   query,
   where,
   orderBy,
+  getDoc,
 } from "firebase/firestore";
 
 import { db } from "../lib/firebaseConfig";
@@ -16,6 +17,12 @@ import type { CNPJ, CNPJFormData } from "../types/cnpj";
 export const cnpjService = {
   async createCNPJ(userId: string, data: CNPJFormData): Promise<CNPJ> {
     try {
+      // Verificar se o CNPJ já existe para este usuário
+      const hasCnpj = await this.userHasCnpj(userId, data.cnpj);
+      if (hasCnpj) {
+        throw new Error("Este CNPJ já está cadastrado para este usuário");
+      }
+
       const now = new Date().toISOString();
       const cnpjData = {
         ...data,
@@ -27,6 +34,9 @@ export const cnpjService = {
 
       const docRef = await addDoc(collection(db, "cnpjs"), cnpjData);
 
+      // Atualizar o array de CNPJs do usuário
+      await this.addCnpjToUser(userId, data.cnpj);
+
       return {
         id: docRef.id,
         ...cnpjData,
@@ -34,6 +44,93 @@ export const cnpjService = {
     } catch (error) {
       console.error("Erro ao criar CNPJ:", error);
       throw error;
+    }
+  },
+
+  async addCnpjToUser(userId: string, cnpj: string): Promise<void> {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) {
+        throw new Error("Usuário não encontrado");
+      }
+
+      const userData = userDoc.data();
+      const currentCnpjs = userData.cnpjs || [];
+
+      // Verificar se o CNPJ já existe no array
+      if (!currentCnpjs.includes(cnpj)) {
+        await updateDoc(userRef, {
+          cnpjs: [...currentCnpjs, cnpj],
+          updatedAt: new Date().toISOString(),
+        });
+      }
+    } catch (error) {
+      console.error("Erro ao adicionar CNPJ ao usuário:", error);
+      throw error;
+    }
+  },
+
+  async removeCnpjFromUser(userId: string, cnpj: string): Promise<void> {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) {
+        throw new Error("Usuário não encontrado");
+      }
+
+      const userData = userDoc.data();
+      const currentCnpjs = userData.cnpjs || [];
+
+      // Remover o CNPJ do array
+      const updatedCnpjs = currentCnpjs.filter((c: string) => c !== cnpj);
+
+      await updateDoc(userRef, {
+        cnpjs: updatedCnpjs,
+        updatedAt: new Date().toISOString(),
+      });
+    } catch (error) {
+      console.error("Erro ao remover CNPJ do usuário:", error);
+      throw error;
+    }
+  },
+
+  async getUserCnpjs(userId: string): Promise<string[]> {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) {
+        return [];
+      }
+
+      const userData = userDoc.data();
+      return userData.cnpjs || [];
+    } catch (error) {
+      console.error("Erro ao buscar CNPJs do usuário:", error);
+      return [];
+    }
+  },
+
+  async getUserCnpjCount(userId: string): Promise<number> {
+    try {
+      const cnpjs = await this.getUserCnpjs(userId);
+      return cnpjs.length;
+    } catch (error) {
+      console.error("Erro ao contar CNPJs do usuário:", error);
+      return 0;
+    }
+  },
+
+  async userHasCnpj(userId: string, cnpj: string): Promise<boolean> {
+    try {
+      const userCnpjs = await this.getUserCnpjs(userId);
+      return userCnpjs.includes(cnpj);
+    } catch (error) {
+      console.error("Erro ao verificar CNPJ do usuário:", error);
+      return false;
     }
   },
 
@@ -78,7 +175,23 @@ export const cnpjService = {
 
   async deleteCNPJ(cnpjId: string): Promise<void> {
     try {
-      await deleteDoc(doc(db, "cnpjs", cnpjId));
+      // Primeiro, buscar o CNPJ para obter o userId e cnpj
+      const cnpjRef = doc(db, "cnpjs", cnpjId);
+      const cnpjDoc = await getDoc(cnpjRef);
+
+      if (!cnpjDoc.exists()) {
+        throw new Error("CNPJ não encontrado");
+      }
+
+      const cnpjData = cnpjDoc.data();
+      const userId = cnpjData.userId;
+      const cnpj = cnpjData.cnpj;
+
+      // Deletar o documento do CNPJ
+      await deleteDoc(cnpjRef);
+
+      // Remover do array do usuário
+      await this.removeCnpjFromUser(userId, cnpj);
     } catch (error) {
       console.error("Erro ao deletar CNPJ:", error);
       throw new Error("Erro ao deletar CNPJ");
@@ -121,5 +234,31 @@ export const cnpjService = {
 
     digit = sum % 11 < 2 ? 0 : 11 - (sum % 11);
     return parseInt(cleaned[13]) === digit;
+  },
+
+  async getUserCnpjStats(userId: string): Promise<{
+    cnpjCount: number;
+    cnpjs: string[];
+    userCnpjs: CNPJ[];
+  }> {
+    try {
+      const [cnpjs, userCnpjs] = await Promise.all([
+        this.getUserCnpjs(userId),
+        this.getCNPJsByUser(userId),
+      ]);
+
+      return {
+        cnpjCount: cnpjs.length,
+        cnpjs,
+        userCnpjs,
+      };
+    } catch (error) {
+      console.error("Erro ao buscar estatísticas do usuário:", error);
+      return {
+        cnpjCount: 0,
+        cnpjs: [],
+        userCnpjs: [],
+      };
+    }
   },
 };

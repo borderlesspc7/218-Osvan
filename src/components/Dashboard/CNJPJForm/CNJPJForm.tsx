@@ -11,7 +11,7 @@ import type { CNPJFormData } from "../../../types/cnpj";
 import "./CNJPJForm.css";
 
 interface CNPJFormProps {
-  onSuccess: (formData: CNPJFormData) => void;
+  onSuccess: (formData: CNPJFormData) => Promise<void>;
   onCancel: () => void;
   isLoading?: boolean;
   initialData?: CNPJFormData;
@@ -34,6 +34,7 @@ const CNPJForm: React.FC<CNPJFormProps> = ({
     }
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = () => {
@@ -54,10 +55,23 @@ const CNPJForm: React.FC<CNPJFormProps> = ({
     if (!validateForm()) return;
 
     setIsSubmitting(true);
+    setSubmitError(null); // Limpar erro anterior
+
     try {
-      onSuccess(formData);
+      await onSuccess(formData);
     } catch (error) {
       console.error("Erro ao criar CNPJ:", error);
+
+      // Verificar se é um erro específico de CNPJ duplicado
+      if (error instanceof Error) {
+        if (error.message.includes("já está cadastrado")) {
+          setSubmitError(error.message);
+        } else {
+          setSubmitError("Erro ao processar CNPJ. Por favor, tente novamente.");
+        }
+      } else {
+        setSubmitError("Erro desconhecido ao processar CNPJ");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -73,6 +87,11 @@ const CNPJForm: React.FC<CNPJFormProps> = ({
 
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+
+    // Limpar erro de submit quando o usuário começa a digitar
+    if (submitError) {
+      setSubmitError(null);
     }
   };
 
@@ -163,6 +182,8 @@ const CNPJForm: React.FC<CNPJFormProps> = ({
         {Object.keys(errors).length > 0 && (
           <ErrorMessage message="Por favor, corrija os erros acima" />
         )}
+
+        {submitError && <ErrorMessage message={submitError} />}
 
         <div className="form-actions">
           <Button
