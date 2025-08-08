@@ -1,0 +1,39 @@
+.selectcnpj-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.selectcnpj-wrapper {
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+.selectcnpj-wrapper--error {
+  border-color: #ef4444;
+}
+
+.selectcnpj-field {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #111827;
+  outline: none;
+}
+
+.selectcnpj-field:focus {
+  outline: none;
+}
+
+.selectcnpj-error {
+  display: block;
+  font-size: 0.875rem;
+  color: #ef4444;
+  margin-top: 0.5rem;
+}

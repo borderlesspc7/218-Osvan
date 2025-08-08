@@ -111,7 +111,7 @@
   color: #b91c1c;
 }
 
-.dashboard-header {
+.dashboard-header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;

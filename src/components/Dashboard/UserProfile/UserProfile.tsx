@@ -2,8 +2,8 @@
 
 import React from "react";
 import { User, Crown, Calendar } from "lucide-react";
-import { useAuthContext } from "../../contexts/useAuthContext";
-import { PLANS } from "../../types/plan";
+import { useAuthContext } from "../../../contexts/useAuthContext";
+import { PLANS } from "../../../types/plan";
 import "./UserProfile.css";
 
 const UserProfile: React.FC = () => {

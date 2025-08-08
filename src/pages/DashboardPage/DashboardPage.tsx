@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { Plus, AlertTriangle } from "lucide-react";
 import { useAuthContext } from "../../contexts/useAuthContext";
 import DashboardLayout from "../../components/Dashboard/DashboardLayout/DashboardLayout";
-import UserProfile from "../../components/UserProfile/UserProfile";
 import CNPJForm from "../../components/Dashboard/CNJPJForm/CNJPJForm";
 import CNPJList from "../../components/Dashboard/CNPJList/CNPJList";
 import Button from "../../components/ui/Button/Button";
@@ -13,6 +12,7 @@ import { cnpjService } from "../../services/cnpjService";
 import { PLANS } from "../../types/plan";
 import type { CNPJ, CNPJFormData } from "../../types/cnpj";
 import "./DashboardPage.css";
+import UserProfile from "../../components/Dashboard/UserProfile/UserProfile";
 
 const DashboardPage: React.FC = () => {
   const { user } = useAuthContext();
@@ -200,7 +200,7 @@ const DashboardPage: React.FC = () => {
             />
           ) : (
             <>
-              <div className="dashboard-header">
+              <div className="dashboard-header-content">
                 <div className="header-info">
                   <h1>Meus CNPJs</h1>
                   <p>Gerencie suas empresas e negociações tributárias</p>

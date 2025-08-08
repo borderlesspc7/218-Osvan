@@ -1,0 +1,11 @@
+.fiscal-indicators {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .fiscal-indicators {
+    grid-template-columns: 1fr;
+  }
+}

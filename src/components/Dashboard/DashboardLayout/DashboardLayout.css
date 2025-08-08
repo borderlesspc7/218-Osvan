@@ -1,18 +1,30 @@
 .dashboard-layout {
   min-height: 100vh;
-  background-color: #f8fafc;
+  background: #f9fafb;
 }
 
-.dashboard-header-layout {
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+.dashboard-main {
+  margin-left: 280px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,89 +35,68 @@
   align-items: center;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.25rem;
+.page-title {
+  font-size: 24px;
   font-weight: 700;
-  color: #1e293b;
-}
-
-.logo svg {
-  color: #3b82f6;
+  color: #111827;
+  margin: 0;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background-color: #f1f5f9;
+  gap: 8px;
+  padding: 8px 12px;
   border-radius: 8px;
-  color: #475569;
-  font-size: 0.875rem;
+  background: #f9fafb;
+  color: #374151;
+  font-size: 14px;
   font-weight: 500;
 }
 
 .header-button {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: none;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   border-radius: 8px;
-  background-color: transparent;
-  color: #64748b;
-  font-size: 0.875rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .header-button:hover {
-  background-color: #f1f5f9;
-  color: #475569;
-}
-
-.logout-button {
-  color: #ef4444;
-}
-
-.logout-button:hover {
-  background-color: #fef2f2;
-  color: #dc2626;
-}
-
-.dashboard-main {
-  padding: 2rem;
+  background: #f9fafb;
+  color: #374151;
+  border-color: #d1d5db;
 }
 
 .dashboard-content {
-  max-width: 1200px;
-  margin: 0 auto;
+  flex: 1;
+  padding: 24px;
+  background: #f9fafb;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .header-content {
-    padding: 1rem;
-  }
-
-  .user-info span {
-    display: none;
-  }
-
-  .header-button span {
-    display: none;
-  }
-
   .dashboard-main {
-    padding: 1rem;
+    margin-left: 0;
+  }
+
+  .dashboard-header {
+    padding: 0 16px;
+  }
+
+  .dashboard-content {
+    padding: 16px;
   }
 }
