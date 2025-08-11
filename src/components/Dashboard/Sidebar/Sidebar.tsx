@@ -1,15 +1,7 @@
 "use client";
 
 import { NavLink } from "react-router-dom";
-import {
-  Building2,
-  User,
-  FileText,
-  Files,
-  Clock,
-  Package,
-  LogOut,
-} from "lucide-react";
+import { Building2, User, FileText, Clock, LogOut } from "lucide-react";
 import { useAuthContext } from "../../../contexts/useAuthContext";
 import { useNavigation } from "../../../hooks/useNavigation";
 import { PATHS } from "../../../routes/paths";
@@ -21,30 +13,42 @@ const Sidebar: React.FC = () => {
 
   const menuItems = [
     {
+      id: "dashboard",
       label: "Painel do cliente",
       to: PATHS.DASHBOARD,
       icon: <User size={20} />,
     },
     {
+      id: "certificates",
       label: "Consulta de certidões",
       to: PATHS.CERTIFICATES,
       icon: <FileText size={20} />,
     },
     {
-      label: "Regras de negócio",
+      id: "negotiation",
+      label: "Simulação e Negociação",
       to: PATHS.NEGOTIATION,
-      icon: <Files size={20} />,
-    },
-    {
-      label: "Histórico e Exportação",
-      to: PATHS.HISTORY_EXPORT,
       icon: <Clock size={20} />,
     },
-    {
-      label: "Planos e pagamentos",
-      to: PATHS.PAYMENTS,
-      icon: <Package size={20} />,
-    },
+    // Comentando rotas que ainda não existem
+    // {
+    //   id: "business-rules",
+    //   label: "Regras de negócio",
+    //   to: "/regras-negocio",
+    //   icon: <Files size={20} />,
+    // },
+    // {
+    //   id: "history-export",
+    //   label: "Histórico e Exportação",
+    //   to: PATHS.HISTORY_EXPORT,
+    //   icon: <Clock size={20} />,
+    // },
+    // {
+    //   id: "payments",
+    //   label: "Planos e pagamentos",
+    //   to: PATHS.PAYMENTS,
+    //   icon: <Package size={20} />,
+    // },
   ];
 
   const handleLogout = async () => {
@@ -66,7 +70,7 @@ const Sidebar: React.FC = () => {
       <nav className="sidebar__nav">
         {menuItems.map((item) => (
           <NavLink
-            key={item.to}
+            key={item.id}
             to={item.to}
             className={({ isActive }) =>
               `sidebar__link ${isActive ? "sidebar__link--active" : ""}`

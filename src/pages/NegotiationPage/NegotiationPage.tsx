@@ -111,11 +111,12 @@ const NegotiationPage: React.FC = () => {
     }
   };
 
-  const disabledAll =
+  const disabledAll = Boolean(
     !selectedDoc ||
-    impedido ||
-    castigoInfo.emCastigo ||
-    (resumo && resumo.valorTotalDivida <= 0);
+      impedido ||
+      castigoInfo.emCastigo ||
+      (resumo && resumo.valorTotalDivida <= 0)
+  );
 
   return (
     <DashboardLayout>

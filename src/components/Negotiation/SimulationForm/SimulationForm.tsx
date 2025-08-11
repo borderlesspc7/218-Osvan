@@ -12,7 +12,7 @@ import { Percent, Calculator } from "lucide-react";
 interface SimulationFormProps {
   baseAmount: number;
   cnpj: string;
-  disabled?: boolean | null;
+  disabled?: boolean;
   onSaved?: (status: "simulado" | "confirmado") => void;
 }
 
