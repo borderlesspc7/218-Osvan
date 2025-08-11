@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import FiscalConsultPage from "../pages/FiscalConsultPage/FiscalConsultPage";
+import NegotiationPage from "../pages/NegotiationPage/NegotiationPage";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
         <Route path={PATHS.REGISTER} element={<RegisterPage />} />
         <Route path={PATHS.DASHBOARD} element={<DashboardPage />} />
         <Route path={PATHS.CERTIFICATES} element={<FiscalConsultPage />} />
+        <Route path={PATHS.NEGOTIATION} element={<NegotiationPage />} />
       </Routes>
     </BrowserRouter>
   );

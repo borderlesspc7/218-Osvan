@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
     },
     {
       label: "Regras de negócio",
-      to: PATHS.BUSINESS_RULES,
+      to: PATHS.NEGOTIATION,
       icon: <Files size={20} />,
     },
     {

@@ -5,7 +5,7 @@ export const PATHS = {
   REGISTER: "/register",
   DASHBOARD: "/dashboard",
   CERTIFICATES: "/certidoes",
-  BUSINESS_RULES: "/regras-negocio",
+  NEGOTIATION: "/negociacao",
   HISTORY_EXPORT: "/historico-exportacao",
   PAYMENTS: "/pagamentos",
 } as const;
