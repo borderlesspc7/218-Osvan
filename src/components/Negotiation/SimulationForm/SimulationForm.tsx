@@ -13,7 +13,7 @@ interface SimulationFormProps {
   baseAmount: number;
   cnpj: string;
   disabled?: boolean;
-  onSaved?: (status: "simulado" | "confirmado") => void;
+  onSaved?: (status: "simulado" | "confirmado", parcelas: number, desconto: number) => void;
 }
 
 const SimulationForm: React.FC<SimulationFormProps> = ({
@@ -50,7 +50,7 @@ const SimulationForm: React.FC<SimulationFormProps> = ({
     try {
       setStatusSaving("saving");
       // onSaved do container fará a chamada com userId (para manter responsabilidades separadas)
-      onSaved?.(status);
+      onSaved?.(status, parcelas, descontoPercentual);
     } finally {
       setStatusSaving("idle");
     }

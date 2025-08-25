@@ -15,6 +15,8 @@ import { fiscalService } from "../../services/fiscalService";
 import type { CNPJ } from "../../types/cnpj";
 import type { FiscalConsultaResult } from "../../types/fiscal";
 import { negociacaoService } from "../../services/negociacaoService";
+import NegotiationModal from "../../components/Negotiation/NegotiationModal/NegotiationModal";
+import type { SimulacaoRegistro } from "../../types/negociacao";
 
 const NegotiationPage: React.FC = () => {
   const { user } = useAuthContext();
@@ -23,6 +25,8 @@ const NegotiationPage: React.FC = () => {
   const [loadingList, setLoadingList] = useState(true);
   const [loadingResumo, setLoadingResumo] = useState(false);
   const [resumo, setResumo] = useState<FiscalConsultaResult | null>(null);
+  const [showNegotiationModal, setShowNegotiationModal] = useState(false);
+  const [currentSimulation, setCurrentSimulation] = useState<SimulacaoRegistro | null>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -91,21 +95,24 @@ const NegotiationPage: React.FC = () => {
     [cnpjs]
   );
 
-  const handleSave = async (status: "simulado" | "confirmado") => {
+  const handleSave = async (status: "simulado" | "confirmado", parcelas: number, desconto: number) => {
     if (!user || !selectedDoc || !resumo) return;
     try {
       const input = {
         cnpj: resumo.cnpj,
         valorTotal: resumo.valorTotalDivida,
-        parcelas: 12,
-        descontoPercentual: 10,
+        parcelas,
+        descontoPercentual: desconto,
       };
-      await negociacaoService.salvarSimulacao(user.uid, input, status);
-      alert(
-        status === "confirmado"
-          ? "Negociação confirmada e salva!"
-          : "Simulação registrada."
-      );
+      const simulacao = await negociacaoService.salvarSimulacao(user.uid, input, status);
+      
+      if (status === "confirmado") {
+        // Abre o modal de negociação
+        setCurrentSimulation(simulacao);
+        setShowNegotiationModal(true);
+      } else {
+        alert("Simulação registrada.");
+      }
     } catch {
       alert("Erro ao salvar a simulação.");
     }
@@ -190,6 +197,19 @@ const NegotiationPage: React.FC = () => {
           />
         </div>
       </div>
+
+      <NegotiationModal
+        isOpen={showNegotiationModal}
+        onClose={() => {
+          setShowNegotiationModal(false);
+          setCurrentSimulation(null);
+        }}
+        simulation={currentSimulation}
+        cnpjData={{
+          cnpj: selectedDoc?.cnpj || "",
+          nomeFantasia: selectedDoc?.nomeFantasia,
+        }}
+      />
     </DashboardLayout>
   );
 };
