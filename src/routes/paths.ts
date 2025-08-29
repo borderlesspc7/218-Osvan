@@ -6,6 +6,7 @@ export const PATHS = {
   DASHBOARD: "/dashboard",
   CERTIFICATES: "/certidoes",
   NEGOTIATION: "/negociacao",
+  JOBS: "/execucoes",
   HISTORY_EXPORT: "/historico-exportacao",
   PAYMENTS: "/pagamentos",
 } as const;

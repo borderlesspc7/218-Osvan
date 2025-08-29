@@ -1,7 +1,7 @@
 "use client";
 
 import { NavLink } from "react-router-dom";
-import { Building2, User, FileText, Clock, LogOut } from "lucide-react";
+import { Building2, User, FileText, Clock, Play, LogOut } from "lucide-react";
 import { useAuthContext } from "../../../contexts/useAuthContext";
 import { useNavigation } from "../../../hooks/useNavigation";
 import { PATHS } from "../../../routes/paths";
@@ -23,6 +23,12 @@ const Sidebar: React.FC = () => {
       label: "Consulta de certidões",
       to: PATHS.CERTIFICATES,
       icon: <FileText size={20} />,
+    },
+    {
+      id: "jobs",
+      label: "Execuções",
+      to: PATHS.JOBS,
+      icon: <Play size={20} />,
     },
     {
       id: "negotiation",
